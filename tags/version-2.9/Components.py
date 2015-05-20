@@ -553,7 +553,7 @@ class DEVSComponent:
 
 		coupled_devs = self.getDEVSModel()
 
-		### if devs instance is not none and priority_list has been invocked (else componentSet order is considered)
+		### if devs instance is not none and priority_list has been invoked (else componentSet order is considered)
 		if coupled_devs is not None and self.priority_list != []:
 
 			shape_list = self.GetShapeList()
@@ -566,7 +566,7 @@ class DEVSComponent:
 
 			### removed models
 			for label in filter(lambda l: l not in label_list, self.priority_list):
-				index = self.priority_list.index[label]
+				index = self.priority_list.index(label)
 				del self.priority_list[index]
 
 			self.priority_list += added_models

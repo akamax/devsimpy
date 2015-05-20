@@ -1906,7 +1906,7 @@ class DEVSimPyApp(wx.App):
 
 		# to avoid conflict between the locale of the machine and the wx locale
 		self.locale = wx.Locale(wx.LANGUAGE_DEFAULT)
-                
+
 		# Set up the exception handler...
 		sys.excepthook = ExceptionHook
 
