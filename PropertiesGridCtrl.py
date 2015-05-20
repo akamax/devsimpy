@@ -208,14 +208,14 @@ class CodeCB(wx.Choicebook):
 											_('Finish Function') : inspect.getsource(cls.finish) if  hasattr(cls, 'finish') else "\tpass"
 									}
 		else:
-			pageTexts = {_("Importing Error"): _("Error trying to import the module: %s.\nChange the python path by cliking in the above 'python_path' cell.\n %s"%(model.python_path,str(cls)))}
+			pageTexts = {_("Importing Error"): _("Error trying to import the module: %s.\nChange the python path by clicking in the above 'python_path' cell.\n %s"%(model.python_path,str(cls)))}
 
 		# Now make a bunch of panels for the choice book
 		for nameFunc in pageTexts:
 			win = wx.Panel(self)
 			box = wx.BoxSizer( wx.HORIZONTAL)
 			st = wx.TextCtrl(win, wx.NewId(), '', style = wx.TE_MULTILINE)
-			st.AppendText(str(pageTexts[nameFunc]))
+			st.AppendText(str(pageTexts[nameFunc]).encode("utf-8"))
 			st.ShowPosition(wx.TOP)
 			st.SetEditable(False)
 			box.Add(st,1,wx.EXPAND)
@@ -223,7 +223,7 @@ class CodeCB(wx.Choicebook):
 
 			self.AddPage(win, nameFunc)
 
-			#marche pas sous Windows
+			# don't work in Windows
 			if wx.Platform == '__WXGTK__':
 				self.SetSelection(5)
 

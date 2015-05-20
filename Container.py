@@ -444,7 +444,7 @@ class Diagram(Savable, Structurable):
 
 			Structurable.ConnectDEVSPorts(diagram, p1, p2)
 
-		### change priority form priority_list is PriorityGUI has been invoked (Otherwise componentSet oreder is considered)
+		### change priority form priority_list is PriorityGUI has been invoked (Otherwise componentSet order is considered)
 		diagram.updateDEVSPriorityList()
 
 		return diagram.getDEVSModel()
