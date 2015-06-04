@@ -30,35 +30,31 @@ class SimpleLayer(DomainBehavior):
 
         self.state = {'status': 'IDLE', 'sigma': INFINITY }
 
-        self.prec_msg = None
-        self.flow_msg = None
+        self.rain_msg = None
 
     def intTransition(self):
         """
         """
         self.state['sigma'] = INFINITY
         self.state['status'] = 'IDLE'
-        self.prec_msg=None
-        self.flow_msg=None
+        self.rain_msg=None
 
     def outputFnc(self):
         """
         """
-        assert self.prec_msg and self.flow_msg
+        assert self.rain_msg
 
-        val = (self.prec_msg.value[0]*20 + self.flow_msg.value[0]*80)/100.0
+        val = (float(self.rain_msg.value[0])*20)/100.0
         self.poke(self.OPorts[0], Message([val, 0, 0], self.timeNext))
 
     def extTransition(self):
         """
         """
         msg1 = self.peek(self.IPorts[0])
-        msg2 = self.peek(self.IPorts[1])
 
-        if msg1: self.prec_msg = msg1
-        if msg2: self.flow_msg = msg2
+        if msg1: self.rain_msg = msg1
 
-        if self.prec_msg and self.flow_msg:
+        if self.rain_msg:
             self.state['status'] = 'BUZY'
             self.state['sigma'] = 0
         else:
