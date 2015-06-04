@@ -35,4 +35,5 @@ encoding/PropertiesGridCtrl.py=utf-8
 encoding/SimulationGUI.py=utf-8
 encoding/Utilities.py=utf-8
 encoding/WizardGUI.py=utf-8
+encoding/ZipManager.py=utf-8
 encoding/devsimpy.py=utf-8
