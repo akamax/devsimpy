@@ -60,6 +60,7 @@ class Layer(DomainBehavior):
         if self.state['status'] == 'IDLE':
             self.state["status"] = "BUZY"
             self.state['sigma'] = self.coef
+            print "sdfsssssssssssss"
         else:
             self.state['sigma'] -= self.elapsed
 

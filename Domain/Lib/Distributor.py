@@ -52,6 +52,7 @@ class Distributor(DomainBehavior):
     def extTransition(self):
         """
         """
+        print "ok"
         self.msg = self.peek(self.IPorts[0])
 
         self.state['status'] = 'BUZY'

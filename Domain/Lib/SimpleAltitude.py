@@ -13,7 +13,7 @@ GLOBAL VARIABLES AND FUNCTIONS:
 from __future__ import with_statement
 
 from DomainInterface.DomainBehavior import DomainBehavior
-from Domain.Basic.Object import Message
+
 
 import os.path
 
@@ -29,7 +29,7 @@ class SimpleAltitude(DomainBehavior):
 
         self.state = {'status': 'IDLE', 'sigma': INFINITY}
 
-        self.msg = None
+        self.msgL = [None]*3
 
     def intTransition(self):
         """
@@ -40,20 +40,26 @@ class SimpleAltitude(DomainBehavior):
     def outputFnc(self):
         """
         """
+        from Domain.Basic.Object import Message
 
-        ### 50%
-        self.msg.value[0] = 50*self.msg.value[0]
-        self.msg.time = self.timeNext
-
-        self.poke(self.OPorts[0], self.msg)
+        ### 10%
+        msg = Message([.1*self.msgL[0].value[0]+.1*self.msgL[1].value[0]+.1*self.msgL[2].value[0],0,0],self.timeNext)
+        self.poke(self.OPorts[0], msg)
 
     def extTransition(self):
         """
         """
-        self.msg = peeks(self.IPorts[0])
+        for i in range(3):
+            msg = self.peek(self.IPorts[i])
+            if msg:
+                self.msgL[i]=msg
 
-        self.state['status'] = 'BUZY'
-        self.state['sigma'] = 0
+		if not None in self.msgL:
+			self.state['sigma'] = 0
+			self.state['status'] = 'SENDING'
+		else:
+			self.state['sigma'] -= self.elapsed
+
 
     def timeAdvance(self): return self.state['sigma']
 
