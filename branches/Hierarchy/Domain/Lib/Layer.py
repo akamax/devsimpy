@@ -57,12 +57,12 @@ class Layer(DomainBehavior):
         if self.msg1: self.buffer += self.msg1.value[0]
         if self.msg2: self.buffer += self.msg2.value[0]
 
-        if self.state['status'] == 'IDLE':
-            self.state["status"] = "BUZY"
-            self.state['sigma'] = self.coef
-            print "sdfsssssssssssss"
-        else:
-            self.state['sigma'] -= self.elapsed
+        #if self.state['status'] == 'IDLE':
+        #    self.state["status"] = "BUZY"
+        #    self.state['sigma'] = self.coef
+        #else:
+        #    self.state['sigma'] -= self.elapsed
+        self.state['sigma'] = 0
 
     def timeAdvance(self): return self.state['sigma']
 

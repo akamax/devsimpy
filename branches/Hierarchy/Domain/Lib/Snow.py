@@ -69,7 +69,7 @@ class Snow(DomainBehavior):
 
         if msg1: self.msg1 = msg1
         if msg2: self.msg2 = msg2
-
+        
         if self.msg1 and self.msg2:
             self.state['status'] = 'BUZY'
             self.state['sigma'] = 0

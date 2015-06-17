@@ -50,10 +50,10 @@ class Delay(DomainBehavior):
     def extTransition(self):
         """
         """
-        print "zdc"
+        
         self.msg = self.peek(self.IPorts[0])
 
-        self.state['sigma'] += self.coef
+        self.state['sigma'] = self.coef
         self.state['status'] = 'BUZY'
 
     def timeAdvance(self): return self.state['sigma']
