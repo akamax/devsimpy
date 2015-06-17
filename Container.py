@@ -433,18 +433,18 @@ class Diagram(Savable, Structurable):
 			dia_0 = diagram.layers[0]
 			shapeL0 = dia_0.GetShapeList()
 
-			for i,m in enumerate(filter(lambda s: isinstance(s, iPort), shapeL0)):
+			for m in filter(lambda s: isinstance(s, iPort), shapeL0):
 				devs_dam.addInPort()
 				diagram.addInPort()
 
-			for i,m in enumerate(filter(lambda s: isinstance(s, oPort), shapeL0)):
+			for m in filter(lambda s: isinstance(s, oPort), shapeL0):
 				devs_uam.addOutPort()
 				diagram.addOutPort()
 
-			for i,m in enumerate(filter(lambda s: isinstance(s, iPort), shape_list)):
+			for m in filter(lambda s: isinstance(s, iPort), shape_list):
 				devs_dam.addOutPort()
 
-			for i,m in enumerate(filter(lambda s: isinstance(s, oPort), shape_list)):
+			for m in filter(lambda s: isinstance(s, oPort), shape_list):
 				devs_uam.addInPort()
 
 		###==================================================================================
@@ -462,11 +462,10 @@ class Diagram(Savable, Structurable):
 				Structurable.ConnectDEVSPorts(diagram, p1, p2)
 		###==============================================================================
 		else:
-			for i,m in enumerate(filter(lambda s: isinstance(s, iPort), shape_list)):
+			for m in filter(lambda s: isinstance(s, iPort), shape_list):
 				### add port to coupled model
 				diagram.addInPort()
 				assert(len(diagram.getIPorts()) <= diagram.input)
-
 
 		###==============================================================================
 		### Add abstraction level manager
@@ -478,7 +477,7 @@ class Diagram(Savable, Structurable):
 				Structurable.ConnectDEVSPorts(diagram, p1, p2)
 				###===============================================================================
 		else:
-			for i,m in enumerate(filter(lambda s: isinstance(s, oPort), shape_list)):
+			for m in filter(lambda s: isinstance(s, oPort), shape_list):
 				### add port to coupled model
 				diagram.addOutPort()
 				assert(len(diagram.getOPorts()) <= diagram.output)
