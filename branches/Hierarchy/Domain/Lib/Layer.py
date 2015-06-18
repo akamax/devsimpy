@@ -30,8 +30,7 @@ class Layer(DomainBehavior):
 
         self.state = {'status': 'IDLE', 'sigma': INFINITY }
 
-        self.msg1 = None
-        self.msg2 = None
+        self.msgL = [None]*2
 
         self.buffer = 0.0
 
@@ -39,30 +38,34 @@ class Layer(DomainBehavior):
         """
         """
         self.state['sigma'] = INFINITY
-        self.state['status'] = 'IDLE'
-        self.buffer = 0.0
 
     def outputFnc(self):
         """
         """
         self.poke(self.OPorts[0], Message([self.buffer, 0, 0], self.timeNext))
+        self.buffer = 0
+        self.msgL = [None]*2
 
     def extTransition(self):
         """
         """
 
         self.msg1 = self.peek(self.IPorts[0])
-        self.msg2 = self.peek(self.IPorts[1])
+        #self.msg2 = self.peek(self.IPorts[1])
 
-        if self.msg1: self.buffer += self.msg1.value[0]
-        if self.msg2: self.buffer += self.msg2.value[0]
+        if self.msg1: self.msgL[0] = self.msg1
+        #if self.msg2: self.msgL[1] = self.msg2
 
+        if not None in self.msgL:
+           self.buffer = self.msgL[0].value[0] #+ self.msgL[1].value[0]
         #if self.state['status'] == 'IDLE':
         #    self.state["status"] = "BUZY"
         #    self.state['sigma'] = self.coef
         #else:
         #    self.state['sigma'] -= self.elapsed
-        self.state['sigma'] = 0
+           self.state['sigma'] = 0
+        else:
+           self.state['sigma'] = INFINITY
 
     def timeAdvance(self): return self.state['sigma']
 

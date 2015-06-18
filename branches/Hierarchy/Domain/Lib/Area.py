@@ -46,7 +46,7 @@ class Area(DomainBehavior):
         """
         """
         self.msg.value[0] = self.coef*self.msg.value[0]
-
+        
         self.poke(self.OPorts[0], self.msg)
 
     def extTransition(self):

@@ -41,9 +41,9 @@ class Distributor(DomainBehavior):
     def outputFnc(self):
         """
         """
-        val1 = self.msg.value[0]*45/100
-        val2 = self.msg.value[0]*35/100
-        val3 = self.msg.value[0]*20/100
+        val1 = self.msg.value[0]*.45
+        val2 = self.msg.value[0]*.35
+        val3 = self.msg.value[0]*.20
 
         self.poke(self.OPorts[0], Message([val1,0,0], self.timeNext))
         self.poke(self.OPorts[1], Message([val2,0,0], self.timeNext))
@@ -52,7 +52,7 @@ class Distributor(DomainBehavior):
     def extTransition(self):
         """
         """
-        print "ok"
+
         self.msg = self.peek(self.IPorts[0])
 
         self.state['status'] = 'BUZY'

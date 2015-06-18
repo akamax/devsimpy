@@ -29,7 +29,7 @@ class Estimator(DomainBehavior):
 
         self.state = {'status': 'IDLE', 'sigma': INFINITY }
 
-        self.msg = None
+        self.msgL = [None]*3
 
     def intTransition(self):
         """
@@ -40,22 +40,28 @@ class Estimator(DomainBehavior):
     def outputFnc(self):
         """
         """
-        val1 = self.msg.value[0]*(1.0/2)
-        val2 = self.msg.value[0]*(1.0/3)
-        val3 = self.msg.value[0]*(1.0/6)
+        sm = self.msgL[0].value[0]+self.msgL[1].value[0]+self.msgL[2].value[0]
+        val1 = sm*0.1
+        val2 = sm*0.9
 
         self.poke(self.OPorts[0], Message([val1,0,0], self.timeNext))
         self.poke(self.OPorts[1], Message([val2,0,0], self.timeNext))
-        self.poke(self.OPorts[2], Message([val3,0,0], self.timeNext))
+        self.msgL = [None]*3
 
     def extTransition(self):
         """
         """
 
-        ### flow
-        self.msg = self.peek(self.IPorts[0])
-        self.state['status'] = 'BUZY'
-        self.state['sigma'] = 0
+        for i in range(3):
+            msg = self.peek(self.IPorts[i])
+            if msg:
+                self.msgL[i]=msg
+
+		if not None in self.msgL:
+			self.state['sigma'] = 0
+			self.state['status'] = 'SENDING'
+		else:
+			self.state['sigma'] = INFINITY
 
     def timeAdvance(self): return self.state['sigma']
 

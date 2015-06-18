@@ -29,42 +29,38 @@ class SimpleTank(DomainBehavior):
 
         self.state = {'status': 'IDLE', 'sigma': INFINITY }
 
-        self.msg1 = None
-        self.msg2 = None
+        self.msgL=[None]*2
 
         ### tank buffer
         self.buffer = 0
 
     def intTransition(self):
         self.state['sigma'] = INFINITY
-        self.state['status'] = 'IDLE'
-        self.msg1=None
-        self.msg2=None
 
     def outputFnc(self):
 
         ### test temp
-        if self.msg1.value[0] > 0:
-            self.buffer -= self.buffer/2.0
-            flow = self.msg2.value[0]
+        if self.msgL[0].value[0] > 0:
+            self.buffer -= self.buffer/3.5
+            flow = self.msgL[1].value[0]
             msg = Message([self.buffer+flow,0,0], self.timeNext)
         else:
-            self.buffer += self.msg2.value[0]
+            self.buffer += self.msgL[1].value[0]
             msg = Message([0,0,0], self.timeNext)
 
         self.poke(self.OPorts[0], msg)
+        self.msgL=[None]*2
 
     def extTransition(self):
         """
         """
-        msg1 = self.peek(self.IPorts[0])
-        msg2 = self.peek(self.IPorts[1])
 
-        if msg1: self.msg1 = msg1
-        if msg2: self.msg2 = msg2
-
-        if self.msg1 and self.msg2:
-            self.state['status'] = 'BUZY'
+        for i in range(2):
+            msg = self.peek(self.IPorts[i])
+            if msg:
+               self.msgL[i]=msg
+        self.debugger(self.msgL[0])
+        if not None in self.msgL:
             self.state['sigma'] = 0
         else:
             self.state['sigma'] = INFINITY
