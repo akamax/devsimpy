@@ -43,7 +43,7 @@ class SimpleAltitude(DomainBehavior):
         from Domain.Basic.Object import Message
 
         ### 10%
-        msg = Message([.1*self.msgL[0].value[0]+.1*self.msgL[1].value[0]+.1*self.msgL[2].value[0],0,0],self.timeNext)
+        msg = Message([1*self.msgL[0].value[0]+1*self.msgL[1].value[0]+1*self.msgL[2].value[0],0,0],self.timeNext)
         self.poke(self.OPorts[0], msg)
 
     def extTransition(self):

@@ -53,7 +53,11 @@ class Delay(DomainBehavior):
         
         self.msg = self.peek(self.IPorts[0])
 
-        self.state['sigma'] = self.coef
+        if self.state['sigma'] == INFINITY:
+           self.state['sigma'] = self.coef
+        else:
+           self.state['sigma'] -= self.elapsed
+
         self.state['status'] = 'BUZY'
 
     def timeAdvance(self): return self.state['sigma']
