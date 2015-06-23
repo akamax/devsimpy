@@ -41,8 +41,8 @@ class Estimator(DomainBehavior):
         """
         """
         sm = self.msgL[0].value[0]+self.msgL[1].value[0]+self.msgL[2].value[0]
-        val1 = sm*0.1
-        val2 = sm*0.9
+        val1 = sm*0.5
+        val2 = sm*0.5
 
         self.poke(self.OPorts[0], Message([val1,0,0], self.timeNext))
         self.poke(self.OPorts[1], Message([val2,0,0], self.timeNext))
