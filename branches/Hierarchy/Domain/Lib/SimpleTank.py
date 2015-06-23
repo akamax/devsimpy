@@ -59,7 +59,7 @@ class SimpleTank(DomainBehavior):
             msg = self.peek(self.IPorts[i])
             if msg:
                self.msgL[i]=msg
-        self.debugger(self.msgL[0])
+       
         if not None in self.msgL:
             self.state['sigma'] = 0
         else:
