@@ -42,8 +42,8 @@ class Distributor(DomainBehavior):
         """
         """
         val1 = self.msg.value[0]*.45
-        val2 = self.msg.value[0]*.35
-        val3 = self.msg.value[0]*.20
+        val2 = self.msg.value[0]*.3
+        val3 = self.msg.value[0]*.10
 
         self.poke(self.OPorts[0], Message([val1,0,0], self.timeNext))
         self.poke(self.OPorts[1], Message([val2,0,0], self.timeNext))
